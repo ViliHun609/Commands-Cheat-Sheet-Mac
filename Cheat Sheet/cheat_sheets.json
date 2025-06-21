@@ -1,0 +1,45 @@
+[
+    {
+        "name": "Markdown",
+        "systemImageName": "doc.text",
+        "subtitle": "Syntax for formatting text",
+        "items": [
+            { "name": "Header", "code": "# Header 1\n## Header 2\n### Header 3" },
+            { "name": "Bold", "code": "**Bold text** or __Bold text__" },
+            { "name": "Italic", "code": "*Italic text* or _Italic text_" },
+            { "name": "Link", "code": "[Link text](https://www.example.com)" },
+            { "name": "Image", "code": "![Alt text](/path/to/image.jpg)" },
+            { "name": "Blockquote", "code": "> This is a blockquote." }
+        ]
+    },
+    {
+        "name": "ffmpeg",
+        "systemImageName": "film",
+        "subtitle": "Video and audio manipulation",
+        "items": [
+            { "name": "Convert MP4 to GIF", "code": "ffmpeg -i input.mp4 output.gif" },
+            { "name": "Extract Audio", "code": "ffmpeg -i input.mp4 -q:a 0 -map a output.mp3" }
+        ]
+    },
+    {
+        "name": "yt-dlp",
+        "systemImageName": "arrow.down.circle",
+        "subtitle": "Download videos from web",
+        "items": [
+            { "name": "Download Video", "code": "yt-dlp <VIDEO_URL>" },
+            { "name": "Download Audio Only", "code": "yt-dlp -x --audio-format mp3 <VIDEO_URL>" }
+        ]
+    },
+    {
+        "name": "Git Commands",
+        "systemImageName": "arrow.triangle.branch",
+        "subtitle": "Common Git operations",
+        "items": [
+            { "name": "Clone Repository", "code": "git clone <repository_url>" },
+            { "name": "Check Status", "code": "git status" },
+            { "name": "Add Changes", "code": "git add . \n# or\ngit add <file_name>" },
+            { "name": "Commit Changes", "code": "git commit -m \"Your commit message\"" },
+            { "name": "Push Changes", "code": "git push origin <branch_name>" }
+        ]
+    }
+]
