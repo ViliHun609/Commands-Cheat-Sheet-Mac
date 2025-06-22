@@ -10,14 +10,13 @@ struct CategoryItemsView: View {
                         VStack(alignment: .leading) {
                             Text(item.name)
                                 .font(.headline)
-                            Text(String(item.code.prefix(80)) + (item.code.count > 80 ? "..." : ""))
+                            Text(item.code) 
                                 .font(.system(.caption, design: .monospaced))
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 3)
                                 .background(Color.gray.opacity(0.2))
                                 .cornerRadius(4)
                                 .foregroundColor(.primary)
-                                .lineLimit(2)
                         }
                         .padding(.vertical, 2)
 
