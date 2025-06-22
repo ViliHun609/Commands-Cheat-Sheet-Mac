@@ -7,7 +7,7 @@ struct Cheat_SheetApp: App {
             NavigationStack {
                 ContentView()
             }
-            .frame(minWidth: 250, minHeight: 300)
+            .frame(minWidth: 300, minHeight: 300)
             .background(.clear)
             
         }

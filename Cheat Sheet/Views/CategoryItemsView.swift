@@ -2,10 +2,28 @@ import SwiftUI
 
 struct CategoryItemsView: View {
     let category: CheatSheetCategory
+    @State private var searchText = ""
+
+    var filteredItems: [CheatSheetItem] {
+        if searchText.isEmpty {
+            return category.items
+        } else {
+            return category.items.filter { item in
+                item.name.localizedCaseInsensitiveContains(searchText) ||
+                item.code.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
 
     var body: some View {
-        List {
-            ForEach(category.items) { item in
+        VStack(spacing: 0) {
+            TextField("Search Items", text: $searchText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal)
+                .padding(.vertical, 8)
+
+            List {
+                ForEach(filteredItems) { item in
                     HStack {
                         VStack(alignment: .leading) {
                             Text(item.name)
@@ -25,14 +43,15 @@ struct CategoryItemsView: View {
                         AnimatedCopyButton {
                             copyToClipboard(text: item.code)
                         }
-                        .padding(.trailing, 8)
+                        .padding(.leading, 4)
                     }
+                }
             }
+            .padding()
+            .scrollIndicators(.never)
+            .navigationTitle(category.name)
+            .listStyle(PlainListStyle())
         }
-        .padding(.horizontal)
-        .navigationTitle(category.name)
-        .listStyle(PlainListStyle())
-        .padding(.bottom, 16)
     }
 
     private func copyToClipboard(text: String) {
@@ -43,16 +62,13 @@ struct CategoryItemsView: View {
     }
 }
 
-
 #if DEBUG
 struct CategoryItemsView_Previews: PreviewProvider {
     static var previews: some View {
         let sampleCategories = DataService.loadCheatSheets()
         
         if let firstCategory = sampleCategories.first {
-           
-                CategoryItemsView(category: firstCategory)
-            
+            CategoryItemsView(category: firstCategory)
         } else {
             Text("No sample category data found for preview.")
         }
