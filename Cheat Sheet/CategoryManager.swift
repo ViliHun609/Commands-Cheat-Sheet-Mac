@@ -10,7 +10,7 @@ class CategoryManager: ObservableObject {
     private var settingsChangedCancellable: AnyCancellable?
 
     init() {
-        loadAndFilterCategories() // Initial load
+        loadAndFilterCategories() 
 
         settingsChangedCancellable = NotificationCenter.default
             .publisher(for: .categorySettingsChanged)

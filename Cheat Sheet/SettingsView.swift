@@ -36,6 +36,8 @@ struct SettingsView: View {
             
             
         }
+        .frame(height: 200)
+        .padding(.top, 0)
         .padding()
         .navigationTitle("Settings")
         .navigationSubtitle(appVersionDisplay)

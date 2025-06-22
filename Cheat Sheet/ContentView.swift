@@ -17,7 +17,7 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header HStack
+     
             HStack {
                 Image("G4")
                     .resizable()
@@ -74,7 +74,7 @@ struct ContentView: View {
             .listStyle(PlainListStyle())
             .padding(.horizontal)
 
-            // Settings Link HStack
+            
             HStack() {
                 NavigationLink(destination: SettingsView()) {
                     Label("Settings", systemImage: "gearshape.fill")
@@ -83,13 +83,11 @@ struct ContentView: View {
             }
             .padding(.leading, 8)
             .padding(.bottom, 4)
-
-        } // End of Main VStack
+        }
         .onAppear {
-            // This ensures it runs every time the view appears.
             categoryManager.loadAndFilterCategories()
         }
-        .overlay( // Overlay for Quit Prompt
+        .overlay(
             Group {
                 if showCustomQuitPrompt {
                     Color.black.opacity(0.4)
@@ -126,16 +124,17 @@ struct ContentView: View {
                             Button("Quit") {
                                 NSApplication.shared.terminate(nil)
                             }
+                            .foregroundStyle(.red)
                             .keyboardShortcut(.defaultAction)
                             .buttonStyle(PlainButtonStyle())
                         }
                         .padding(.top, 10)
                     }
+                    .frame(width: 150, height: 150)
                     .padding(EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20))
                     .background(Material.regular)
                     .cornerRadius(12)
                     .shadow(radius: 10)
-                    .frame(width: 280)
                     .transition(.scale.combined(with: .opacity))
                 }
             }
@@ -148,8 +147,8 @@ struct ContentView: View {
                 }
             }
         }
-    } // End of var body
-} // End of struct ContentView
+    }
+}
 
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {

@@ -29,9 +29,10 @@ struct CategoryItemsView: View {
                     }
             }
         }
+        .padding(.horizontal)
         .navigationTitle(category.name)
         .listStyle(PlainListStyle())
-        .padding(.horizontal)
+        .padding(.bottom, 16)
     }
 
     private func copyToClipboard(text: String) {
@@ -47,7 +48,7 @@ struct CategoryItemsView: View {
 struct CategoryItemsView_Previews: PreviewProvider {
     static var previews: some View {
         let sampleCategories = DataService.loadCheatSheets()
-        // Ensure there's at least one category for the preview, otherwise show a placeholder
+        
         if let firstCategory = sampleCategories.first {
             NavigationView {
                 CategoryItemsView(category: firstCategory)
