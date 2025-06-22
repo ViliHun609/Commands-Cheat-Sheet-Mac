@@ -73,8 +73,6 @@ struct CategoryToggleRow: View {
 }
 
 #Preview {
-    NavigationView {
         SettingsView()
             .frame(width: 400, height: 400)
-    }
 }

@@ -5,12 +5,12 @@ struct CategoryItemsView: View {
 
     var body: some View {
         List {
-            ForEach(category.items) { item in                
+            ForEach(category.items) { item in
                     HStack {
                         VStack(alignment: .leading) {
                             Text(item.name)
                                 .font(.headline)
-                            Text(item.code) 
+                            Text(item.code)
                                 .font(.system(.caption, design: .monospaced))
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 3)
@@ -50,9 +50,9 @@ struct CategoryItemsView_Previews: PreviewProvider {
         let sampleCategories = DataService.loadCheatSheets()
         
         if let firstCategory = sampleCategories.first {
-            NavigationView {
+           
                 CategoryItemsView(category: firstCategory)
-            }
+            
         } else {
             Text("No sample category data found for preview.")
         }

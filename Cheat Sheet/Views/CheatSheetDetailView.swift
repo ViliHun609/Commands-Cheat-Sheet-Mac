@@ -1,3 +1,6 @@
+
+// This is not used in the app at the moment
+
 import SwiftUI
 
 struct CheatSheetDetailView: View {
@@ -51,9 +54,9 @@ struct CheatSheetDetailView: View {
 #if DEBUG
 struct CheatSheetDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
+        
             CheatSheetDetailView(item: CheatSheetItem(name: "Sample Item", code: "Sample code snippet\nAnother line of code;"))
-        }
+        
         .frame(width: 300, height: 200)
     }
 }
