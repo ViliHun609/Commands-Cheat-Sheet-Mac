@@ -7,8 +7,8 @@ struct Cheat_SheetApp: App {
             NavigationStack {
                 ContentView()
             }
-            .frame(width: 250, height: 250)
-            .background(.clear) 
+            .frame(minWidth: 250, minHeight: 300)
+            .background(.clear)
             
         }
         .menuBarExtraStyle(.window)
