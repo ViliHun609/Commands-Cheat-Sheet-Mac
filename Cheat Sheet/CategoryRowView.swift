@@ -25,7 +25,7 @@ struct CategoryRowView: View {
         .scaleEffect(isHovered ? 1.02 : 1.0)
         .background(
             RoundedRectangle(cornerRadius: 6)
-                .fill(isHovered ? Color.gray.opacity(0.15) : Color.clear)
+                .fill(Color.clear)
                 .padding(.horizontal, -4)
                 .padding(.vertical, -4)
         )
@@ -35,3 +35,4 @@ struct CategoryRowView: View {
         .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isHovered)
     }
 }
+

@@ -1,22 +1,23 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var categories: [CheatSheetCategory] = []
+    @StateObject private var categoryManager = CategoryManager()
+    
     @State private var isQuitButtonHovered = false
     @State private var showCustomQuitPrompt = false
     @FocusState private var isCancelButtonFocused: Bool
 
     private var appVersionDisplay: String {
-          if let version = Bundle.main.appVersion { 
+          if let version = Bundle.main.appVersion {
               return "v\(version)"
           } else {
               return "v?.?"
           }
       }
 
-
     var body: some View {
         VStack(spacing: 0) {
+            // Header HStack
             HStack {
                 Image("G4")
                     .resizable()
@@ -58,19 +59,37 @@ struct ContentView: View {
             Divider()
 
             List {
-                ForEach(categories) { category in
-                    NavigationLink(destination: CategoryItemsView(category: category)) {
-                        CategoryRowView(category: category)
+                if categoryManager.filteredCategories.isEmpty {
+                    Text("No categories enabled. Adjust in Settings.")
+                        .foregroundColor(.secondary)
+                        .padding()
+                } else {
+                    ForEach(categoryManager.filteredCategories) { category in
+                        NavigationLink(destination: CategoryItemsView(category: category)) {
+                            CategoryRowView(category: category)
+                        }
                     }
                 }
             }
             .listStyle(PlainListStyle())
             .padding(.horizontal)
-        }
+
+            // Settings Link HStack
+            HStack() {
+                NavigationLink(destination: SettingsView()) {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
+                Spacer()
+            }
+            .padding(.leading, 8)
+            .padding(.bottom, 4)
+
+        } // End of Main VStack
         .onAppear {
-            self.categories = DataService.loadCheatSheets()
+            // This ensures it runs every time the view appears.
+            categoryManager.loadAndFilterCategories()
         }
-        .overlay(
+        .overlay( // Overlay for Quit Prompt
             Group {
                 if showCustomQuitPrompt {
                     Color.black.opacity(0.4)
@@ -129,8 +148,8 @@ struct ContentView: View {
                 }
             }
         }
-    }
-}
+    } // End of var body
+} // End of struct ContentView
 
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
@@ -140,3 +159,7 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 #endif
+
+#Preview {
+    ContentView()
+}

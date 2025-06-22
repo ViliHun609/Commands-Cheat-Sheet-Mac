@@ -43,11 +43,18 @@ struct CategoryItemsView: View {
     }
 }
 
+
 #if DEBUG
 struct CategoryItemsView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            CategoryItemsView(category: ContentView().categories[0])
+        let sampleCategories = DataService.loadCheatSheets()
+        // Ensure there's at least one category for the preview, otherwise show a placeholder
+        if let firstCategory = sampleCategories.first {
+            NavigationView {
+                CategoryItemsView(category: firstCategory)
+            }
+        } else {
+            Text("No sample category data found for preview.")
         }
     }
 }
