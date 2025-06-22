@@ -17,6 +17,7 @@ struct CategoryItemsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            
             TextField("Search Items", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
