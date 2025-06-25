@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @State private var allCategories: [CheatSheetCategory] = []
-    
+
     private var appVersionDisplay: String {
         if let version = Bundle.main.appVersion {
             return "v\(version)"
@@ -10,7 +10,8 @@ struct SettingsView: View {
             return "v?.?"
         }
     }
-    var body: some View {
+
+    var body: some View {        
         Form {
             Section("Display Categories") {
                 if allCategories.isEmpty {
@@ -22,9 +23,12 @@ struct SettingsView: View {
                     }
                 }
             }
-        
-            Spacer()
+
             
+
+            Spacer()
+            Spacer()
+
             Section("About") {
                 HStack {
                     Text("App Version")
@@ -33,8 +37,6 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
                 }
             }
-            
-            
         }
         .frame(height: 200)
         .padding(.top, 0)
@@ -56,23 +58,19 @@ struct CategoryToggleRow: View {
         let keyName = category.name.lowercased().replacingOccurrences(of: " ", with: "_")
         let fullKey = "category_enabled_\(keyName)"
         _isEnabled = AppStorage(wrappedValue: true, fullKey)
-        print("[SettingsView Init] Category: '\(category.name)', Key: '\(fullKey)', Initial isEnabled from AppStorage: \(self.isEnabled)")
     }
 
     var body: some View {
+        
         Toggle(category.name, isOn: $isEnabled)
             .onChange(of: isEnabled) { oldValue, newValue in
-                let keyName = category.name.lowercased().replacingOccurrences(of: " ", with: "_")
-                let fullKey = "category_enabled_\(keyName)"
-                print("[SettingsView Change] Category: '\(category.name)', Key: '\(fullKey)', isEnabled toggled from \(oldValue) to -> \(newValue)")
-                
                 NotificationCenter.default.post(name: .categorySettingsChanged, object: nil)
-                print("[SettingsView Change] Posted categorySettingsChanged notification.")
             }
     }
 }
 
 #Preview {
-        SettingsView()
-            .frame(width: 400, height: 400)
+    SettingsView()
+        .frame(width: 300, height: 300)
+        .background(.clear)
 }

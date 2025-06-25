@@ -1,5 +1,4 @@
 
-// This is not used in the app at the moment
 
 import SwiftUI
 
@@ -8,7 +7,7 @@ struct CheatSheetDetailView: View {
     @State private var isCopyButtonHovered = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(item.name)
                     .font(.title2)
@@ -30,7 +29,7 @@ struct CheatSheetDetailView: View {
             
             Divider()
             
-            ScrollView {
+            ScrollView() {
                 Text(item.code)
                     .font(.system(.body, design: .monospaced))
                     .padding(.top, 5)
@@ -42,6 +41,8 @@ struct CheatSheetDetailView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .navigationTitle(item.name)
     }
+    
+    
 
     private func copyToClipboard(text: String) {
         let pasteboard = NSPasteboard.general
@@ -51,13 +52,13 @@ struct CheatSheetDetailView: View {
     }
 }
 
+
+
 #if DEBUG
 struct CheatSheetDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        
+    static var previews: some View {        
             CheatSheetDetailView(item: CheatSheetItem(name: "Sample Item", code: "Sample code snippet\nAnother line of code;"))
-        
-        .frame(width: 300, height: 200)
+            .frame(width: 300, height: 200)
     }
 }
 #endif

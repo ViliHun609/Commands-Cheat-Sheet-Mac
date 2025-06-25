@@ -3,7 +3,7 @@ import SwiftUI
 struct CategoryItemsView: View {
     let category: CheatSheetCategory
     @State private var searchText = ""
-
+    
     var filteredItems: [CheatSheetItem] {
         if searchText.isEmpty {
             return category.items
@@ -38,14 +38,18 @@ struct CategoryItemsView: View {
                                 .foregroundColor(.primary)
                         }
                         .padding(.vertical, 2)
-
+                        
                         Spacer()
+                        
+                        AnimatedDetailsButton(item: item)
+                            .padding(.trailing, 4)
 
                         AnimatedCopyButton {
                             copyToClipboard(text: item.code)
                         }
-                        .padding(.leading, 4)
+                        .padding(.trailing, -4)
                     }
+                    .listRowSeparator(.hidden)
                 }
             }
             .padding()

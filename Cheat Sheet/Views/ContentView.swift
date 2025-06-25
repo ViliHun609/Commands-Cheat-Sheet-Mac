@@ -1,11 +1,21 @@
 import SwiftUI
 
+struct NoHighlightNavigationLinkStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background(Color.clear)
+            .foregroundColor(.primary)
+    }
+}
+
 struct ContentView: View {
     @StateObject private var categoryManager = CategoryManager()
     
     @State private var isQuitButtonHovered = false
     @State private var showCustomQuitPrompt = false
     @FocusState private var isCancelButtonFocused: Bool
+    @State private var isNavigating = false
+    @State private var isHovered = false
 
     private var appVersionDisplay: String {
           if let version = Bundle.main.appVersion {
@@ -17,7 +27,7 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-     
+        
             HStack {
                 Image("G4")
                     .resizable()
@@ -33,7 +43,27 @@ struct ContentView: View {
                 Spacer()
 
                 Text("Cheat Sheets")
-                    .font(.headline)
+                    .font(.headline)                                
+                
+                VStack(alignment: .center, spacing: 0) {
+                    NavigationLink(destination: SettingsView()) {
+                        Label("", systemImage: "gearshape.fill")
+                            .offset(y: isHovered ? -2 : -25)
+                            .offset(x : 4)
+                    }
+                    .buttonStyle(.plain)
+                    .onHover { hovering in
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.55)) {
+                            self.isHovered = hovering
+                        }
+                    }                   
+                }
+                .frame(width: 28, height: 28)
+                .background(
+                    Image(systemName: "gear")
+                        .opacity(isHovered ? 0 : 0.55)
+                        .cornerRadius(10)
+                )
 
                 Spacer()
                 Spacer()
@@ -43,20 +73,30 @@ struct ContentView: View {
                 }) {
                     Label("Quit", systemImage: "xmark.circle.fill")
                         .labelStyle(.iconOnly)
+                        .opacity(isQuitButtonHovered ? 1 : 0)
+                        .offset(x: isQuitButtonHovered ? 0 : 35)
                         .foregroundColor(isQuitButtonHovered ? .red : .primary)
                         .scaleEffect(isQuitButtonHovered ? 1.25 : 1.0)
-                        .animation(.spring(response: 0.35, dampingFraction: 0.5), value: isQuitButtonHovered)
+                        .animation(.spring(response: 0.35, dampingFraction: 0.75), value: isQuitButtonHovered)
                 }
                 .buttonStyle(PlainButtonStyle())
+                .background(
+                    Color.red
+                        .opacity(0.1)
+                )
+                    .cornerRadius(10)
                 .onHover { hovering in
                     self.isQuitButtonHovered = hovering
                 }
                 .padding(.trailing)
+                
             }
             .frame(height: 30)
-            .background(Color(NSColor.windowBackgroundColor))
-
+            .background(Material.bar)
+            
+            
             Divider()
+            
 
             List {
                 if categoryManager.filteredCategories.isEmpty {
@@ -68,22 +108,17 @@ struct ContentView: View {
                         NavigationLink(destination: CategoryItemsView(category: category)) {
                             CategoryRowView(category: category)
                         }
+                        .buttonStyle(NoHighlightNavigationLinkStyle())
+                        .listRowSeparator(.hidden)
                     }
                 }
             }
+            .scrollIndicators(.never)
             .listStyle(PlainListStyle())
-            .padding(.horizontal)
-
-            
-            HStack() {
-                NavigationLink(destination: SettingsView()) {
-                    Label("Settings", systemImage: "gearshape.fill")
-                }
-                Spacer()
-            }
-            .padding(.leading, 8)
-            .padding(.bottom, 4)
+            .padding(.horizontal, 8)
+    
         }
+        .background(Color.clear)
         .onAppear {
             categoryManager.loadAndFilterCategories()
         }
@@ -154,7 +189,8 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .frame(width: 380, height: 450)
+            .frame(width: 300, height: 300)
+            .background(Color.clear)
     }
 }
 #endif
